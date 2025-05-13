@@ -18,7 +18,7 @@ perl = find_program('perl', required: true)
 gen_aliases = custom_target('aliases_generator',
   output: 'aliases.inc',
   input: 'build/make-aliases.pl',
-  command: [perl, '@INPUT@', meson.build_root(), meson.source_root() + '/src/charset', meson.source_root() + '/build/Aliases'],
+  command: [perl, '@INPUT@', meson.build_root(), meson.current_source_dir() + '/src/charset', meson.current_source_dir() + '/build/Aliases'],
   depend_files: ['build/Aliases'],
   build_by_default: true,
   console: true
@@ -88,6 +88,11 @@ pkg.generate(parserutils_lib,
   description: 'Parser utility library',
   version: '0.2.5',
   subdirs: 'parserutils'
+)
+
+parserutils_dep = declare_dependency(
+  link_with: parserutils_lib,
+  include_directories: inc
 )
 
 # Tests
